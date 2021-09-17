@@ -9,8 +9,8 @@ import { createAppContainer } from "react-navigation";
 const stackNavigator = createStackNavigator({
   Signup: SignupScreen,
   Signin: SigninScreen,
-  Home: HomeScreen
-})
+  Home: HomeScreen,
+});
 
 const App = createAppContainer(stackNavigator);
 
