@@ -1,5 +1,5 @@
 import auth from "@react-native-firebase/auth";
-import { NavigationContainer } from "@react-navigation/native";
+import firestore from "@react-native-firebase/firestore";
 import React, { useState } from "react";
 import { Input, Button, Text } from "react-native-elements";
 import { TouchableOpacity } from "react-native-gesture-handler";
@@ -12,7 +12,14 @@ const SigninScreen = ({ navigation }) => {
   const signIn = async () => {
     try {
       const response = await auth().signInWithEmailAndPassword(email, password);
-      navigation.navigate("Home");
+      firestore().collection('users')
+      .doc(email)
+      .get()
+      .then(documentSnapshot => {
+        var phoneNumber = '+1'.concat(documentSnapshot.data().phone);
+        navigation.navigate("OTP", { phone: phoneNumber, });
+      });
+      
     } catch (err) {
       setError(err.message);
     }
